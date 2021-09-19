@@ -23,13 +23,27 @@
         <section class="questions">
             <div class="wrapper">
                 <p>Have you ever wanted to share some juicy gossip or rave about a famous actor, but just can't come up with their name? That Actor from that Thing is here to help!! Simply enter the information you do remember, and we'll do the rest!</p>
-                <label>You know, they're in that 
+                <label for="genre">You know, they're in that 
                     <select name="genre" id="genre">
-                        <option value="">Comedy</option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
+                        <option value="action">Action</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="animation">Animation</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="crime">Crime</option>
+                        <option value="documentary">Documentary</option>
+                        <option value="drama">drama</option>
+                        <option value="family">Family</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="history">History</option>
+                        <option value="horror">Horror</option>
+                        <option value="music">Music</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="romance">Romance</option>
+                        <option value="scienceFiction">Science Fiction</option>
+                        <option value="tvMovie">TV Movie</option>
+                        <option value="thriller">Thriller</option>
+                        <option value="war">War</option>
+                        <option value="western">western</option>
                     </select>
                 </label>
             </div>
@@ -37,7 +51,8 @@
         <section class="output">
             <div class="wrapper">
                 <p>Oh! You must be thinking of:</p>
-                <button>Nope...not them...Next!</button>
+                <p class="suggestedActor"></p>
+                <button class="shuffle">Nope...not them...Next!</button>
             </div>
         </section>
     </main>
