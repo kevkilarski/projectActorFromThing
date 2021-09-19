@@ -1,4 +1,18 @@
-/* ======================
-INDEX - HEADER
-=========================*/
+header {
+    background: url('https://images.unsplash.com/photo-1581390114939-946f9a890a7f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1400&q=80') center;
+    height: 90vh;
+}
 
+.flexContainer {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+h1 {
+    margin: 0;
+
+}
+
+// https://blog.prototypr.io/how-to-make-a-background-blur-in-css-with-one-line-of-code-e446c7236e60

@@ -1,0 +1,21 @@
+@mixin fontSize($sizeValue) {
+    font-size: $sizeValue * 1px;
+    font-size: ($sizeValue/20) * 1rem;
+}
+
+
+
+//  @include fontSize(87);
+
+
+
+// @mixin lineHeight($sizeValue) {
+//     line-height: $sizeValue * 1px;
+//     line-height: ($sizeValue/20) * 1rem;
+// }
+
+// @mixin letterSpacing($sizeValue) {
+//     letter-spacing: $sizeValue * 1px;
+//     letter-spacing: ($sizeValue/20) * 1rem;
+// }
+
