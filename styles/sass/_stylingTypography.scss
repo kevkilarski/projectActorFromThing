@@ -1,40 +1,34 @@
 body {
-    background-color: #f1f7f6;
-    color: #2c2c2c;
     font-family: 'Lato', sans-serif;
     font-weight: 400;
     font-size: 125%;
-    color: $primaryBlack;
 }
 
 h1 {
     font-family: 'Oxygen', sans-serif;
     @include fontSize(110);
-    color: $primaryGreen;
 }
 
-h2, p.description {
-    @include fontSize(72);
+h2 {
+    @include fontSize(60);
     font-weight: 700;
 }
 
-p {
-    @include fontSize(50);
+p, 
+label {
+    @include fontSize(30);
+    line-height: 2rem;
+    letter-spacing: 0.1rem;
 }
 
 button {
     font-family: 'Oxygen', sans-serif;
     @include fontSize(40);
-    background-color: $primaryRed;
-    color: $primaryWhite;
-}
-
-footer {
-    background-color: $primaryBlack;
+    
 }
 
 footer p {
-    color: $primaryWhite;
+    @include fontSize(20);
 }
 
 
