@@ -4,7 +4,7 @@ PSEUDO CODE
 
 // Create actorApp namespace Object
 // Create init method to kick off the application
-// Setup OMDB API:
+// Setup TMDB API:
     // apiURL; apiKey
 
 // Get user input
@@ -12,9 +12,8 @@ PSEUDO CODE
     // Add event listener for 'select' element
 
 // Have API return an actor based on user input
-    // Search APIs for user-selected genre using filter method
-    // Parse actors in identified objects using forEach method
-    // Add parsed actors to new array (possibleActors = [])
+    // Perform first API call for films based on user-selected genre
+    // Perform second API call for actors based on previously generated films
 
 // Print actor name to page
     // Store 'p' element (class="suggestedActor")
@@ -28,29 +27,27 @@ PSEUDO CODE
         // Replace printed actor name with value of array index
 
 
-    // *** Place list of release dates & certification into an object that user's selection will choose from
-
 /* ======================
 APPLICATION CODE
 =========================*/
 
-// create namespace object
+// Create namespace object
 const filmApp = {};
 
-// set api properties to namespace
-filmApp.apiUrl = "https://api.themoviedb.org/3/discover/movie";
+// Set API properties to namespace
 filmApp.apiKey = "35d6e1fc2fa9c724779e6903ab30320b";
 
+// Define method to call API targeting user-selected genre
+filmApp.getFilm = () => {
+    // Declaring url property for first API call to find movie IDs
+    filmApp.apiUrlDiscover = "https://api.themoviedb.org/3/discover/movie";
 
-
-
-
-filmApp.getActor = () => {
-    const url = new URL(filmApp.apiUrl);
+    const url = new URL(filmApp.apiUrlDiscover);
 
     url.search = new URLSearchParams({
         api_key: filmApp.apiKey,
-        with_genres: 28,
+        with_genres: 28, // *** This must be user-selected!!
+        
             // https://www.themoviedb.org/talk/5daf6eb0ae36680011d7e6ee
                 // Action          28
                 // Adventure       12
@@ -71,30 +68,59 @@ filmApp.getActor = () => {
                 // Thriller        53
                 // War             10752
                 // Western         37
-        // with_cast: 287,
-        // 'primary_release_date.gte': '1997-01-01',
-        // 'primary_release_date.lte': '2003-01-01',
-        // 'certification_country': 'US',
-        // 'certification': 'G'
-            // NR, G, PG, PG-13, R, NC-17
+
+                        // Additional query strings
+                            // with_cast: 287,
+                            // 'primary_release_date.gte': '1997-01-01',
+                            // 'primary_release_date.lte': '2003-01-01',
+                            // 'sort_by': 'popularity.desc' (this is default)
+                            // 'certification_country': 'US',
+                            // 'certification': 'G'
+                                // NR, G, PG, PG-13, R, NC-17
+
     })
 
     fetch(url).then((response) => {
         return response.json();
     })
     .then ((jsonResponse) => {
+        console.log(`--------API CALL 1--------`);
+        console.log(`Output of all films of this genre below`);
         console.log(jsonResponse);
+        console.log(`This is the first movie ID (most popular film) from genre list - ${jsonResponse.results[0].id}`);
+
+        // *** need to put the top 10(?) movie IDs in an array and pass this to next function.  For of loop to create this array?
+        filmApp.getActor(jsonResponse.results[0].id);
     })
 
 };
 
+// Method to call API for list of actors in movie ID list
+filmApp.getActor = (filmId) => {
+    // Declaring url property for second API call to find actor
+    filmApp.apiUrlCredits = `https://api.themoviedb.org/3/movie/${filmId}/credits`;
 
+    const url = new URL(filmApp.apiUrlCredits);
 
+    url.search = new URLSearchParams({
+        api_key: filmApp.apiKey
+    })
 
-
-filmApp.init = () => {
-    console.log("hey!");
-    filmApp.getActor();
+    fetch(url).then((response) => {
+        return response.json();
+    })
+    .then ((jsonResponse) => {
+        console.log(`--------API CALL 2--------`);
+        console.log(`Output from all cast and crew from the movie ID passed in`);
+        console.log(jsonResponse);
+        console.log(`This is the first actor (top billing) from the movie ID - ${jsonResponse.cast[0].name}`);
+    })
 }
 
+// Declare filmApp init method
+filmApp.init = () => {
+    filmApp.getFilm();
+}
+
+// Call the init method
 filmApp.init();
