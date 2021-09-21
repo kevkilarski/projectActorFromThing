@@ -38,7 +38,7 @@ const filmApp = {};
 filmApp.apiKey = "35d6e1fc2fa9c724779e6903ab30320b";
 
 // Define method to call API targeting user-selected genre
-filmApp.getFilm = () => {
+filmApp.getFilmID = (query) => {
     // Declaring url property for first API call to find movie IDs
     filmApp.apiUrlDiscover = "https://api.themoviedb.org/3/discover/movie";
 
@@ -46,7 +46,8 @@ filmApp.getFilm = () => {
 
     url.search = new URLSearchParams({
         api_key: filmApp.apiKey,
-        with_genres: 28, // *** This must be user-selected!!
+        with_genres: query,
+        'sort_by': 'vote_count.desc' // *** This must be user-selected!!
         
             // https://www.themoviedb.org/talk/5daf6eb0ae36680011d7e6ee
                 // Action          28
@@ -73,7 +74,7 @@ filmApp.getFilm = () => {
                             // with_cast: 287,
                             // 'primary_release_date.gte': '1997-01-01',
                             // 'primary_release_date.lte': '2003-01-01',
-                            // 'sort_by': 'popularity.desc' (this is default)
+                            // 'sort_by': 'popularity.desc' 'vote_average.desc' (this is default)
                             // 'certification_country': 'US',
                             // 'certification': 'G'
                                 // NR, G, PG, PG-13, R, NC-17
@@ -114,12 +115,36 @@ filmApp.getActor = (filmId) => {
         console.log(`Output from all cast and crew from the movie ID passed in`);
         console.log(jsonResponse);
         console.log(`This is the first actor (top billing) from the movie ID - ${jsonResponse.cast[0].name}`);
+        // for (let i = 0; i <= 9; i++) {
+        //     console.log(i);
+        // }
+        document.querySelector("#suggestedActor").innerText = '';
+        filmApp.displayName(jsonResponse.cast[0].name);
+    })
+}
+// Display name on the page
+
+filmApp.displayName = (actorName) => {
+    const divElement = document.querySelector("#suggestedActor");
+    const name = document.createElement('p');
+    name.innerText = actorName;
+
+    divElement.appendChild(name);
+
+}
+
+// Event Listener for the dropdown menu
+filmApp.eventListener = () => {
+    document.querySelector('#genre').addEventListener('change', (event) => {
+        filmApp.getFilmID(event.target.value);
     })
 }
 
+
 // Declare filmApp init method
 filmApp.init = () => {
-    filmApp.getFilm();
+
+    filmApp.eventListener();
 }
 
 // Call the init method
