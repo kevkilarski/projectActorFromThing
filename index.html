@@ -13,10 +13,9 @@
 </head>
 <body>
     <header>
+        <div class="bgImage"></div>
         <div class="wrapper">
-            <div class="flexContainer">
-                <h1>That Actor from that Thing</h1>
-            </div>
+            <h1>That Actor from that Thing</h1>
         </div> 
     </header>
     <main>
@@ -25,13 +24,14 @@
                 <p>Have you ever wanted to share some juicy gossip or rave about a famous actor, but just can't come up with their name? That Actor from that Thing is here to help!! Simply enter the information you do remember, and we'll do the rest!</p>
                 <label for="genre">You know, they're in that 
                     <select name="genre" id="genre">
+                        <option value="selectOne" selected="selected" disabled>Select One</option>
                         <option value="action">Action</option>
                         <option value="adventure">Adventure</option>
                         <option value="animation">Animation</option>
                         <option value="comedy">Comedy</option>
                         <option value="crime">Crime</option>
                         <option value="documentary">Documentary</option>
-                        <option value="drama">drama</option>
+                        <option value="drama">Drama</option>
                         <option value="family">Family</option>
                         <option value="fantasy">Fantasy</option>
                         <option value="history">History</option>
@@ -43,14 +43,15 @@
                         <option value="tvMovie">TV Movie</option>
                         <option value="thriller">Thriller</option>
                         <option value="war">War</option>
-                        <option value="western">western</option>
+                        <option value="western">Western</option>
                     </select>
+                    movie.
                 </label>
             </div>
         </section>
         <section class="output">
             <div class="wrapper">
-                <p>Oh! You must be thinking of:</p>
+                <h2>Oh! You must be thinking of:</h2>
                 <p class="suggestedActor"></p>
                 <button class="shuffle">Nope...not them...Next!</button>
             </div>
