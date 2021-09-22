@@ -34,6 +34,8 @@ APPLICATION CODE
 // Create namespace object
 const filmApp = {};
 
+num = 0;
+
 // Set API properties to namespace
 filmApp.apiKey = "35d6e1fc2fa9c724779e6903ab30320b";
 
@@ -118,33 +120,59 @@ filmApp.getActor = (filmId) => {
         // for (let i = 0; i <= 9; i++) {
         //     console.log(i);
         // }
+        const actorArray = [];
+
+        for (let i = 0; i <=9; i++) {
+            actorArray.push(jsonResponse.cast[i].name);
+        }
+        
         document.querySelector("#suggestedActor").innerText = '';
-        filmApp.displayName(jsonResponse.cast[0].name);
+        filmApp.displayName(jsonResponse.cast[0].name, actorArray);
     })
 }
+
+
+
 // Display name on the page
 
-filmApp.displayName = (actorName) => {
+filmApp.displayName = (actorName, actorList) => {
+    
     const divElement = document.querySelector("#suggestedActor");
     const name = document.createElement('p');
-    name.innerText = actorName;
-
-    divElement.appendChild(name);
+    if (num <= 9) {
+        name.innerText = actorList[num];
+        divElement.appendChild(name);
+        num = num + 1;
+        console.log(actorList);
+    } else {
+        name.innerText = "Someone we've never heard of!";
+        divElement.appendChild(name);
+    }
 
 }
 
 // Event Listener for the dropdown menu
-filmApp.eventListener = () => {
-    document.querySelector('#genre').addEventListener('change', (event) => {
-        filmApp.getFilmID(event.target.value);
+// filmApp.grabGenre = () => {
+//     document.querySelector('#genre').addEventListener('change', (event) => {
+//         filmApp.getFilmID(event.target.value);
+//     })
+// }
+
+// Event Listener for the button
+
+filmApp.nextActor = () => {
+    document.querySelector('#shuffle').addEventListener ('click', () => {
+        const userInput = document.querySelector('#genre');
+        console.log(userInput.value);
+        console.log("Hey");
+        filmApp.getFilmID(userInput.value);
     })
 }
 
 
 // Declare filmApp init method
 filmApp.init = () => {
-
-    filmApp.eventListener();
+    filmApp.nextActor();
 }
 
 // Call the init method
