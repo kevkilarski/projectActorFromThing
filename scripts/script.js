@@ -36,6 +36,7 @@ const filmApp = {};
 
 num = 0;
 
+
 // Set API properties to namespace
 filmApp.apiKey = "35d6e1fc2fa9c724779e6903ab30320b";
 
@@ -87,10 +88,10 @@ filmApp.getFilmID = (query) => {
         return response.json();
     })
     .then ((jsonResponse) => {
-        console.log(`--------API CALL 1--------`);
-        console.log(`Output of all films of this genre below`);
-        console.log(jsonResponse);
-        console.log(`This is the first movie ID (most popular film) from genre list - ${jsonResponse.results[0].id}`);
+        // console.log(`--------API CALL 1--------`);
+        // console.log(`Output of all films of this genre below`);
+        // console.log(jsonResponse);
+        // console.log(`This is the first movie ID (most popular film) from genre list - ${jsonResponse.results[0].id}`);
 
         // *** need to put the top 10(?) movie IDs in an array and pass this to next function.  For of loop to create this array?
         filmApp.getActor(jsonResponse.results[0].id);
@@ -113,10 +114,10 @@ filmApp.getActor = (filmId) => {
         return response.json();
     })
     .then ((jsonResponse) => {
-        console.log(`--------API CALL 2--------`);
-        console.log(`Output from all cast and crew from the movie ID passed in`);
-        console.log(jsonResponse);
-        console.log(`This is the first actor (top billing) from the movie ID - ${jsonResponse.cast[0].name}`);
+        // console.log(`--------API CALL 2--------`);
+        // console.log(`Output from all cast and crew from the movie ID passed in`);
+        // console.log(jsonResponse);
+        // console.log(`This is the first actor (top billing) from the movie ID - ${jsonResponse.cast[0].name}`);
         // for (let i = 0; i <= 9; i++) {
         //     console.log(i);
         // }
@@ -151,28 +152,45 @@ filmApp.displayName = (actorName, actorList) => {
 
 }
 
-// Event Listener for the dropdown menu
-// filmApp.grabGenre = () => {
-//     document.querySelector('#genre').addEventListener('change', (event) => {
-//         filmApp.getFilmID(event.target.value);
-//     })
-// }
-
 // Event Listener for the button
 
+const divElement = document.querySelector("#suggestedActor");
+            const name = document.createElement("p");
+
 filmApp.nextActor = () => {
-    document.querySelector('#shuffle').addEventListener ('click', () => {
+    document.querySelector('#shuffle').addEventListener ('click', (event) => {
         const userInput = document.querySelector('#genre');
-        console.log(userInput.value);
-        console.log("Hey");
-        filmApp.getFilmID(userInput.value);
+        if (userInput.value == 'selectOne') {
+            
+            name.innerText = "";
+            name.innerText = "You need to select a genre!!!";
+            divElement.append(name);
+
+        } else {
+            console.log("you have selected the shuffle!");
+            console.log(userInput.value);
+            filmApp.getFilmID(userInput.value);
+            document.querySelector('#shuffle').textContent = "No...It's not them...";
+        }
     })
 }
 
+filmApp.reset = () => {
+    document.querySelector('#reset').addEventListener ('click', () => {
+        console.log("hey");
+        num = 0;
+        const pElement = document.querySelector("#suggestedActor p");
+        pElement.innerText = '';
+        document.querySelector('#shuffle').textContent = "Find Actor";
+        document.querySelector('#genre').value = 'selectOne';
+    })
+}
 
 // Declare filmApp init method
 filmApp.init = () => {
     filmApp.nextActor();
+    filmApp.reset();
+
 }
 
 // Call the init method
