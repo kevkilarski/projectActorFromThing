@@ -218,7 +218,7 @@ footer p {
 }
 
 body {
-  background: #edf8f6;
+  background: #c3f5ec;
   color: #2c2c2c;
 }
 
@@ -242,12 +242,11 @@ header {
   background: url("../assets/heroImageBlurred.jpg") center;
   background-size: cover;
   height: 55vh;
-  position: relative;
 }
 
 h1 {
-  color: #bbfaef;
-  text-align: center;
+  color: #2c2c2c;
+  text-shadow: 2px 2px 5px white;
 }
 
 .questions p,
@@ -256,7 +255,7 @@ h2 {
 }
 
 select {
-  background: #edf8f6;
+  background: #c3f5ec;
 }
 
 .output {
@@ -289,7 +288,7 @@ button {
 
 button:hover {
   color: #ba4e4e;
-  background: #edf8f6;
+  background-color: #c3f5ec;
 }
 
 footer {
@@ -301,4 +300,41 @@ footer p {
 }
 footer p a {
   color: #f0f0f0;
+}
+
+@media (max-width: 1200px) {
+  h1 {
+    font-size: 90px;
+    font-size: 4.5rem;
+    padding: 15px 0;
+  }
+}
+@media (max-width: 780px) {
+  h2 {
+    font-size: 40px;
+    font-size: 2rem;
+  }
+
+  p,
+label {
+    font-size: 25px;
+    font-size: 1.25rem;
+  }
+
+  button {
+    width: 75%;
+    font-size: 30px;
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 375px) {
+  .questions p,
+h2 {
+    margin: 25px 0;
+  }
+
+  button {
+    width: 100%;
+    margin: 15px 0;
+  }
 }
