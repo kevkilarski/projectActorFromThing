@@ -34,8 +34,12 @@ APPLICATION CODE
 // Create namespace object
 const filmApp = {};
 
-num = 0;
-
+// Create namespace variables
+filmApp.findButtonEl = document.querySelector('#shuffle');
+filmApp.resultDivEl = document.querySelector('#suggestedActor');
+filmApp.dropdownGenreEl = document.querySelector('#genre');
+filmApp.createPara = document.createElement('p');
+filmApp.actorCount = 0;
 
 // Set API properties to namespace
 filmApp.apiKey = "35d6e1fc2fa9c724779e6903ab30320b";
@@ -116,7 +120,7 @@ filmApp.getActor = (filmId) => {
     .then ((jsonResponse) => {
         // console.log(`--------API CALL 2--------`);
         // console.log(`Output from all cast and crew from the movie ID passed in`);
-        // console.log(jsonResponse);
+        console.log(jsonResponse);
         // console.log(`This is the first actor (top billing) from the movie ID - ${jsonResponse.cast[0].name}`);
         // for (let i = 0; i <= 9; i++) {
         //     console.log(i);
@@ -127,7 +131,7 @@ filmApp.getActor = (filmId) => {
             actorArray.push(jsonResponse.cast[i].name);
         }
         
-        document.querySelector("#suggestedActor").innerText = '';
+        filmApp.resultDivEl.innerText = '';
         filmApp.displayName(jsonResponse.cast[0].name, actorArray);
     })
 }
@@ -137,40 +141,28 @@ filmApp.getActor = (filmId) => {
 // Display name on the page
 
 filmApp.displayName = (actorName, actorList) => {
-    
-    const divElement = document.querySelector("#suggestedActor");
-    const name = document.createElement('p');
-    if (num <= 9) {
-        name.innerText = actorList[num];
-        divElement.appendChild(name);
-        num = num + 1;
+        filmApp.createPara.innerText = actorList[filmApp.actorCount];
+        filmApp.resultDivEl.appendChild(filmApp.createPara);
+        filmApp.actorCount++;
         console.log(actorList);
-    } else {
-        name.innerText = "Someone we've never heard of!";
-        divElement.appendChild(name);
-    }
-
 }
 
 // Event Listener for the button
 
-const divElement = document.querySelector("#suggestedActor");
-            const name = document.createElement("p");
+filmApp.findActor = () => {
+    filmApp.findButtonEl.addEventListener ('click', (event) => {
+        if (filmApp.dropdownGenreEl.value == 'selectOne') {
+            filmApp.createPara.innerText = "";
+            filmApp.createPara.innerText = "You need to select a genre!!!";
+            filmApp.resultDivEl.append(filmApp.createPara);
 
-filmApp.nextActor = () => {
-    document.querySelector('#shuffle').addEventListener ('click', (event) => {
-        const userInput = document.querySelector('#genre');
-        if (userInput.value == 'selectOne') {
-            
-            name.innerText = "";
-            name.innerText = "You need to select a genre!!!";
-            divElement.append(name);
-
+        } else if (filmApp.actorCount > 9) { 
+            filmApp.createPara.innerText = "Someone we've never heard of!";
         } else {
             console.log("you have selected the shuffle!");
-            console.log(userInput.value);
-            filmApp.getFilmID(userInput.value);
-            document.querySelector('#shuffle').textContent = "No...It's not them...";
+            console.log(filmApp.dropdownGenreEl.value);
+            filmApp.getFilmID(filmApp.dropdownGenreEl.value);
+            filmApp.findButtonEl.textContent = "No...It's not them...";
         }
     })
 }
@@ -178,19 +170,18 @@ filmApp.nextActor = () => {
 filmApp.reset = () => {
     document.querySelector('#reset').addEventListener ('click', () => {
         console.log("hey");
-        num = 0;
+        filmApp.actorCount = 0;
+        filmApp.findButtonEl.textContent = "Find Actor";
+        filmApp.dropdownGenreEl.value = 'selectOne';
         const pElement = document.querySelector("#suggestedActor p");
         pElement.innerText = '';
-        document.querySelector('#shuffle').textContent = "Find Actor";
-        document.querySelector('#genre').value = 'selectOne';
     })
 }
 
 // Declare filmApp init method
 filmApp.init = () => {
-    filmApp.nextActor();
+    filmApp.findActor();
     filmApp.reset();
-
 }
 
 // Call the init method

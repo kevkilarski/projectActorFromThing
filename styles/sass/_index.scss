@@ -1,33 +1,31 @@
 // HEADER STYLES
 
-
-
-
 header {
     background: url('../assets/heroImageBlurred.jpg') center;
     background-size: cover;
     height: 55vh;
-    position: relative;
 }
 
 h1 {
-    color: $sencondayGreen;
-    text-align: center;
+    color: $primaryBlack;
+    text-shadow: 2px 2px 5px white;
+    
+    // display: flex;
+    // height: 55vh;
+    // justify-content: center;
+    // align-items: flex-end;
+    
+    // color: #fff;
+    // text-shadow:
+    //     0 0 7px #fff,
+    //     0 0 10px #fff,
+    //     0 0 21px #fff,
+    //     0 0 42px #0fa,
+    //     0 0 82px #0fa,
+    //     0 0 92px #0fa,
+    //     0 0 102px #0fa,
+    //     0 0 151px #0fa;
 }
-
-// .bgImage {
-//     background: url('https://images.unsplash.com/photo-1581390114939-946f9a890a7f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1400&q=80') center;
-//     filter: blur(5px);
-//     height: 90vh;
-//     position: relative;
-// }
-
-// h1 {
-//     color: $sencondayGreen;
-//     position: absolute;
-//     bottom: 130px;
-//     text-align: center;
-// }
 
 // MAIN STYLES
 
@@ -61,7 +59,7 @@ button {
 
 button:hover {
     color: $primaryRed;
-    background: $primaryGreen;
+    background-color: $primaryGreen;
 }
 
 // FOOTER STYLES
@@ -75,6 +73,40 @@ footer {
                     color: $primaryWhite;
                 }
         }
+}
+
+// MEDIA QUERIES
+
+@media (max-width: 1200px) {
+    h1 {
+        @include fontSize(90);
+        padding: 15px 0;
+    }
+}
+
+@media (max-width: 780px) {
+    h2 {
+        @include fontSize(40);
+    }
+    p ,
+    label {
+        @include fontSize(25);
+    }
+    button {
+        width: 75%;
+        @include fontSize(30);
+    }
+}
+
+@media (max-width: 375px) {
+    .questions p,
+    h2 {
+        margin: 25px 0;
+    }
+    button {
+        width: 100%;
+        margin: 15px 0;
+    }
 }
 
 // https://blog.prototypr.io/how-to-make-a-background-blur-in-css-with-one-line-of-code-e446c7236e60
