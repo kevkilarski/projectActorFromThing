@@ -39,6 +39,7 @@ filmApp.findButtonEl = document.querySelector('#shuffle');
 filmApp.resultDivEl = document.querySelector('#suggestedActor');
 filmApp.dropdownGenreEl = document.querySelector('#genre');
 filmApp.createPara = document.createElement('p');
+filmApp.createImg = document.createElement('img');
 filmApp.actorCount = 0;
 
 // Set API properties to namespace
@@ -107,6 +108,7 @@ filmApp.getFilmID = (query) => {
 filmApp.getActor = (filmId) => {
     // Declaring url property for second API call to find actor
     filmApp.apiUrlCredits = `https://api.themoviedb.org/3/movie/${filmId}/credits`;
+    filmApp.apiUrlImg = `https://image.tmdb.org/t/p/w300/`;
 
     const url = new URL(filmApp.apiUrlCredits);
 
@@ -126,13 +128,16 @@ filmApp.getActor = (filmId) => {
         //     console.log(i);
         // }
         const actorArray = [];
+        const imgArray = [];
 
         for (let i = 0; i <=9; i++) {
             actorArray.push(jsonResponse.cast[i].name);
+            imgArray.push(jsonResponse.cast[i].profile_path);
         }
-        
+        console.log(imgArray);
+
         filmApp.resultDivEl.innerText = '';
-        filmApp.displayName(jsonResponse.cast[0].name, actorArray);
+        filmApp.displayActor(actorArray, imgArray);
     })
 }
 
@@ -140,11 +145,19 @@ filmApp.getActor = (filmId) => {
 
 // Display name on the page
 
-filmApp.displayName = (actorName, actorList) => {
+filmApp.displayActor = (actorList, imgList) => {
         filmApp.createPara.innerText = actorList[filmApp.actorCount];
         filmApp.resultDivEl.appendChild(filmApp.createPara);
+
+        filmApp.createImg.src = `https://image.tmdb.org/t/p/w300/` + imgList[filmApp.actorCount];
+        filmApp.createImg.alt = `Headshot of the actor ${actorList[filmApp.actorCount]}`;
+        filmApp.resultDivEl.appendChild(filmApp.createImg);
+
+
+
+
         filmApp.actorCount++;
-        console.log(actorList);
+
 }
 
 // Event Listener for the button
@@ -158,6 +171,9 @@ filmApp.findActor = () => {
 
         } else if (filmApp.actorCount > 9) { 
             filmApp.createPara.innerText = "Someone we've never heard of!";
+            filmApp.createImg.src = `../assets/safiCantFind.jpg`;
+            filmApp.createImg.alt = `Angry man with beard and glasses`;
+            filmApp.resultDivEl.appendChild(filmApp.createImg);
         } else {
             console.log("you have selected the shuffle!");
             console.log(filmApp.dropdownGenreEl.value);
@@ -175,6 +191,8 @@ filmApp.reset = () => {
         filmApp.dropdownGenreEl.value = 'selectOne';
         const pElement = document.querySelector("#suggestedActor p");
         pElement.innerText = '';
+        filmApp.createImg.src = ``;
+        filmApp.createImg.alt = ``;
     })
 }
 
