@@ -99,7 +99,13 @@ filmApp.getFilmID = (query) => {
         // console.log(`This is the first movie ID (most popular film) from genre list - ${jsonResponse.results[0].id}`);
 
         // *** need to put the top 10(?) movie IDs in an array and pass this to next function.  For of loop to create this array?
-        filmApp.getActor(jsonResponse.results[0].id);
+        let randomizeMovie = Math.floor(Math.random() * 19) + 1;
+        
+        console.log("rando number", randomizeMovie);
+
+        console.log("actor ID", jsonResponse.results[randomizeMovie]);
+        
+        filmApp.getActor(jsonResponse.results[randomizeMovie].id);
     })
 
 };
@@ -127,17 +133,31 @@ filmApp.getActor = (filmId) => {
         // for (let i = 0; i <= 9; i++) {
         //     console.log(i);
         // }
-        const actorArray = [];
-        const imgArray = [];
+        // const actorArray = [];
+        // const imgArray = [];
 
-        for (let i = 0; i <=9; i++) {
-            actorArray.push(jsonResponse.cast[i].name);
-            imgArray.push(jsonResponse.cast[i].profile_path);
-        }
-        console.log(imgArray);
+        // for (let i = 0; i <=9; i++) {
+        //     actorArray.push(jsonResponse.cast[i].name);
+        //     imgArray.push(jsonResponse.cast[i].profile_path);
+        // }
+        // console.log(imgArray);
 
+        // // filmApp.resultDivEl.innerText = '';
+        // // filmApp.displayActor(actorArray, imgArray);
+
+        // for (let i = 0; i <=9; i++) {
+        //     actorArray.push(jsonResponse.cast[i].name);
+        //     imgArray.push(jsonResponse.cast[i].profile_path);
+        // }
+        // console.log(imgArray);
+
+         let randomizeActor = Math.floor(Math.random() * jsonResponse.cast.length);
+
+        console.log('random actor', randomizeActor);
+
+        console.log(jsonResponse.cast.length);
         filmApp.resultDivEl.innerText = '';
-        filmApp.displayActor(actorArray, imgArray);
+        filmApp.displayActor(jsonResponse.cast[randomizeActor].name, jsonResponse.cast[randomizeActor].profile_path);
     })
 }
 
@@ -146,12 +166,26 @@ filmApp.getActor = (filmId) => {
 // Display name on the page
 
 filmApp.displayActor = (actorList, imgList) => {
-        filmApp.createPara.innerText = actorList[filmApp.actorCount];
+        // filmApp.createPara.innerText = actorList[filmApp.actorCount];
+        // filmApp.resultDivEl.appendChild(filmApp.createPara);
+
+        // filmApp.createImg.src = `https://image.tmdb.org/t/p/w300/` + imgList[filmApp.actorCount];
+        // filmApp.createImg.alt = `Headshot of the actor ${actorList[filmApp.actorCount]}`;
+        // filmApp.resultDivEl.appendChild(filmApp.createImg);
+
+
+        filmApp.createPara.innerText = actorList;
         filmApp.resultDivEl.appendChild(filmApp.createPara);
 
-        filmApp.createImg.src = `https://image.tmdb.org/t/p/w300/` + imgList[filmApp.actorCount];
-        filmApp.createImg.alt = `Headshot of the actor ${actorList[filmApp.actorCount]}`;
-        filmApp.resultDivEl.appendChild(filmApp.createImg);
+        if (imgList == null) {
+            filmApp.createImg.src = `../assets/noProfilePic.jpg`;
+            filmApp.createImg.alt = `Blank headshot`;
+            filmApp.resultDivEl.append(filmApp.createImg);
+        } else {
+            filmApp.createImg.src = `https://image.tmdb.org/t/p/w300/` + imgList;
+            filmApp.createImg.alt = `Headshot of the actor ${actorList}`;
+            filmApp.resultDivEl.appendChild(filmApp.createImg);
+        }
 
 
 
@@ -179,6 +213,7 @@ filmApp.findActor = () => {
             console.log(filmApp.dropdownGenreEl.value);
             filmApp.getFilmID(filmApp.dropdownGenreEl.value);
             filmApp.findButtonEl.textContent = "No...It's not them...";
+            document.querySelector("#genre").disabled = true;
         }
     })
 }
@@ -188,11 +223,12 @@ filmApp.reset = () => {
         console.log("hey");
         filmApp.actorCount = 0;
         filmApp.findButtonEl.textContent = "Find Actor";
-        filmApp.dropdownGenreEl.value = 'selectOne';
+        filmApp.dropdownGenreEl.value = "selectOne";
         const pElement = document.querySelector("#suggestedActor p");
-        pElement.innerText = '';
+        pElement.innerText = "";
         filmApp.createImg.src = ``;
         filmApp.createImg.alt = ``;
+        document.querySelector("#genre").disabled = false;
     })
 }
 
@@ -203,4 +239,5 @@ filmApp.init = () => {
 }
 
 // Call the init method
+
 filmApp.init();
