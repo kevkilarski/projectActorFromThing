@@ -38,24 +38,54 @@ const filmApp = {};
 filmApp.findButtonEl = document.querySelector('#shuffle');
 filmApp.resultDivEl = document.querySelector('#suggestedActor');
 filmApp.dropdownGenreEl = document.querySelector('#genre');
+filmApp.dropdownDecadeEl = document.querySelector('#decade');
+filmApp.dropdownRatingEl = document.querySelector('#rating');
 filmApp.createPara = document.createElement('p');
+filmApp.createParaTwo = document.createElement('p');
 filmApp.createImg = document.createElement('img');
 filmApp.actorCount = 0;
+
+filmApp.decade = {
+    'none': ['', ''],
+    '1970': ['1970-01-01', '1979-12-31'],
+    '1980': ['1980-01-01', '1989-12-31'],
+    '1990': ['1990-01-01', '1999-12-31'],
+    '2000': ['2000-01-01', '2009-12-31'],
+    '2010': ['2010-01-01', '2019-12-31'],
+    '2020': ['2020-01-01', '2029-12-31'],
+}
+
+filmApp.ratings = {
+    'none': ['', ''],
+    'kid': ['PG-13', ''],
+    'risky': ['', 'R']
+}
 
 // Set API properties to namespace
 filmApp.apiKey = "35d6e1fc2fa9c724779e6903ab30320b";
 
 // Define method to call API targeting user-selected genre
-filmApp.getFilmID = (query) => {
+filmApp.getFilmID = (queryGenre, queryDecade, queryRating) => {
     // Declaring url property for first API call to find movie IDs
     filmApp.apiUrlDiscover = "https://api.themoviedb.org/3/discover/movie";
 
     const url = new URL(filmApp.apiUrlDiscover);
 
+
+
     url.search = new URLSearchParams({
         api_key: filmApp.apiKey,
-        with_genres: query,
-        'sort_by': 'vote_count.desc' // *** This must be user-selected!!
+        with_genres: queryGenre,
+        'primary_release_date.gte': filmApp.decade[queryDecade][0],
+        'primary_release_date.lte': filmApp.decade[queryDecade][1],
+        'certification_country': 'US',
+
+        'certification.lte': filmApp.ratings[queryRating][0],
+
+        'certification.gte': filmApp.ratings[queryRating][1],
+
+        // 'certification.gte': queryRating,
+        'sort_by': 'vote_count.desc'
         
             // https://www.themoviedb.org/talk/5daf6eb0ae36680011d7e6ee
                 // Action          28
@@ -93,25 +123,30 @@ filmApp.getFilmID = (query) => {
         return response.json();
     })
     .then ((jsonResponse) => {
-        // console.log(`--------API CALL 1--------`);
-        // console.log(`Output of all films of this genre below`);
-        // console.log(jsonResponse);
-        // console.log(`This is the first movie ID (most popular film) from genre list - ${jsonResponse.results[0].id}`);
 
-        // *** need to put the top 10(?) movie IDs in an array and pass this to next function.  For of loop to create this array?
-        let randomizeMovie = Math.floor(Math.random() * 19) + 1;
+        console.log("CONSOLE LOG FROM JSON", jsonResponse);
+
+        console.log("---------THIS IS A ", filmApp.ratings[queryRating], " MOVIE--------------");
+
+        console.log(queryDecade);
+
+        console.log(filmApp.decade[queryDecade]);
+
+        console.log("RATING", queryRating);
+
+        let randomizeMovie = Math.floor(Math.random() * jsonResponse.results.length);
         
         console.log("rando number", randomizeMovie);
 
         console.log("actor ID", jsonResponse.results[randomizeMovie]);
         
-        filmApp.getActor(jsonResponse.results[randomizeMovie].id);
+        filmApp.getActor(jsonResponse.results[randomizeMovie].id, jsonResponse.results[randomizeMovie].title);
     })
 
 };
 
 // Method to call API for list of actors in movie ID list
-filmApp.getActor = (filmId) => {
+filmApp.getActor = (filmId, filmTitle) => {
     // Declaring url property for second API call to find actor
     filmApp.apiUrlCredits = `https://api.themoviedb.org/3/movie/${filmId}/credits`;
     filmApp.apiUrlImg = `https://image.tmdb.org/t/p/w300/`;
@@ -126,38 +161,18 @@ filmApp.getActor = (filmId) => {
         return response.json();
     })
     .then ((jsonResponse) => {
-        // console.log(`--------API CALL 2--------`);
-        // console.log(`Output from all cast and crew from the movie ID passed in`);
+
         console.log(jsonResponse);
-        // console.log(`This is the first actor (top billing) from the movie ID - ${jsonResponse.cast[0].name}`);
-        // for (let i = 0; i <= 9; i++) {
-        //     console.log(i);
-        // }
-        // const actorArray = [];
-        // const imgArray = [];
 
-        // for (let i = 0; i <=9; i++) {
-        //     actorArray.push(jsonResponse.cast[i].name);
-        //     imgArray.push(jsonResponse.cast[i].profile_path);
-        // }
-        // console.log(imgArray);
+        console.log(filmTitle);
 
-        // // filmApp.resultDivEl.innerText = '';
-        // // filmApp.displayActor(actorArray, imgArray);
-
-        // for (let i = 0; i <=9; i++) {
-        //     actorArray.push(jsonResponse.cast[i].name);
-        //     imgArray.push(jsonResponse.cast[i].profile_path);
-        // }
-        // console.log(imgArray);
-
-         let randomizeActor = Math.floor(Math.random() * jsonResponse.cast.length);
+        let randomizeActor = Math.floor(Math.random() * jsonResponse.cast.length);
 
         console.log('random actor', randomizeActor);
 
         console.log(jsonResponse.cast.length);
         filmApp.resultDivEl.innerText = '';
-        filmApp.displayActor(jsonResponse.cast[randomizeActor].name, jsonResponse.cast[randomizeActor].profile_path);
+        filmApp.displayActor(jsonResponse.cast[randomizeActor].name, jsonResponse.cast[randomizeActor].profile_path, jsonResponse.cast[randomizeActor].character, filmTitle, jsonResponse.cast.length);
     })
 }
 
@@ -165,7 +180,7 @@ filmApp.getActor = (filmId) => {
 
 // Display name on the page
 
-filmApp.displayActor = (actorList, imgList) => {
+filmApp.displayActor = (actorList, imgList, characterName, filmTitle, castLength) => {
         // filmApp.createPara.innerText = actorList[filmApp.actorCount];
         // filmApp.resultDivEl.appendChild(filmApp.createPara);
 
@@ -176,6 +191,8 @@ filmApp.displayActor = (actorList, imgList) => {
 
         filmApp.createPara.innerText = actorList;
         filmApp.resultDivEl.appendChild(filmApp.createPara);
+
+
 
         if (imgList == null) {
             filmApp.createImg.src = `../assets/noProfilePic.jpg`;
@@ -188,7 +205,13 @@ filmApp.displayActor = (actorList, imgList) => {
         }
 
 
-
+        if (characterName == '') {
+            filmApp.createParaTwo.innerText = `You may know them as some person from ${filmTitle}.`;
+        } else {
+            filmApp.createParaTwo.innerText = `You may know them as ${characterName} from ${filmTitle}.`;
+        }
+        
+        filmApp.resultDivEl.appendChild(filmApp.createParaTwo);
 
         filmApp.actorCount++;
 
@@ -197,10 +220,10 @@ filmApp.displayActor = (actorList, imgList) => {
 // Event Listener for the button
 
 filmApp.findActor = () => {
-    filmApp.findButtonEl.addEventListener ('click', (event) => {
-        if (filmApp.dropdownGenreEl.value == 'selectOne') {
+    filmApp.findButtonEl.addEventListener ('click', () => {
+        if (filmApp.dropdownGenreEl.value == 'selectOne' || filmApp.dropdownDecadeEl.value == 'selectOne' || filmApp.dropdownRatingEl.value == 'selectOne') {
             filmApp.createPara.innerText = "";
-            filmApp.createPara.innerText = "You need to select a genre!!!";
+            filmApp.createPara.innerText = "We need some information!!!";
             filmApp.resultDivEl.append(filmApp.createPara);
 
         } else if (filmApp.actorCount > 9) { 
@@ -208,12 +231,15 @@ filmApp.findActor = () => {
             filmApp.createImg.src = `../assets/safiCantFind.jpg`;
             filmApp.createImg.alt = `Angry man with beard and glasses`;
             filmApp.resultDivEl.appendChild(filmApp.createImg);
+            filmApp.createParaTwo.innerText = '';
         } else {
             console.log("you have selected the shuffle!");
             console.log(filmApp.dropdownGenreEl.value);
-            filmApp.getFilmID(filmApp.dropdownGenreEl.value);
+            filmApp.getFilmID(filmApp.dropdownGenreEl.value, filmApp.dropdownDecadeEl.value, filmApp.dropdownRatingEl.value);
             filmApp.findButtonEl.textContent = "No...It's not them...";
-            document.querySelector("#genre").disabled = true;
+            filmApp.dropdownGenreEl.disabled = true;
+            filmApp.dropdownDecadeEl.disabled = true;
+            filmApp.dropdownRatingEl.disabled = true;
         }
     })
 }
@@ -224,11 +250,16 @@ filmApp.reset = () => {
         filmApp.actorCount = 0;
         filmApp.findButtonEl.textContent = "Find Actor";
         filmApp.dropdownGenreEl.value = "selectOne";
+        filmApp.dropdownDecadeEl.value = "selectOne";
+        filmApp.dropdownRatingEl.value = "selectOne";
         const pElement = document.querySelector("#suggestedActor p");
         pElement.innerText = "";
         filmApp.createImg.src = ``;
         filmApp.createImg.alt = ``;
-        document.querySelector("#genre").disabled = false;
+        filmApp.createParaTwo.innerText = '';
+        filmApp.dropdownGenreEl.disabled = false;
+        filmApp.dropdownDecadeEl.disabled = false;
+        filmApp.dropdownRatingEl.disabled = false;
     })
 }
 
