@@ -5,26 +5,39 @@ PSEUDO CODE
 // Create actorApp namespace Object
 // Create init method to kick off the application
 // Setup TMDB API:
-    // apiURL; apiKey
+    // apiKey
+    // apiUrlDiscover (1/2)
+    // apiUrlCredits (2/2)
 
 // Get user input
-    // Store 'select' element (class="genre")
-    // Add event listener for 'select' element
+    // Store 'select' elements (class="genre", class='rating', class='decade')
+
+// Add event listener to 'Find an Actor' button
+    // Change text on button after 'click'
+    // Change actor if shuffle is selected
+    // Store 'button' element (class="shuffle")
+    // Start counter for the number of actor suggestions
+
+// Add event listener to 'Reset' button
+    // reset drop-down menus on 'click'
 
 // Have API return an actor based on user input
-    // Perform first API call for films based on user-selected genre
-    // Perform second API call for actors based on previously generated films
+    // Perform first API call (apiUrlDiscover) for films based on user-selected genre, decade of film, and rating
+    // Perform second API call (apiUrlCredits) for actors based on previously generated films
 
-// Print actor name to page
+// Print actor name and image to page
     // Store 'p' element (class="suggestedActor")
-    // Append to page the value of first index in possibleActors array
+    // Append actor's name to page 
+    // Store 'img' element 
+    // Append actor's image to page
+
+// Print character name and movie they're from to page
+    // Store a second 'p' element
+    // Append to page
     
-// Change actor if shuffle is selected
-    // Store 'button' element (class="shuffle")
-    // Add event listener for 'button' element
-    // If selected
-        // Select the next array index from possibleActors array
-        // Replace printed actor name with value of array index
+// Add error handling for when nothing has been selected for one or all of the drop-down menus
+// Add error handling so the list of actor's isn't endless (counter utilized)
+// Add error handling if there is no image in the API
 
 
 /* ======================
@@ -34,8 +47,9 @@ APPLICATION CODE
 // Create namespace object
 const filmApp = {};
 
-// Create namespace variables
+// Create namespace variables to store elements, create elements, and initialize counter
 filmApp.findButtonEl = document.querySelector('#shuffle');
+filmApp.resetButtonEl = document.querySelector('#reset');
 filmApp.resultDivEl = document.querySelector('#suggestedActor');
 filmApp.dropdownGenreEl = document.querySelector('#genre');
 filmApp.dropdownDecadeEl = document.querySelector('#decade');
@@ -45,6 +59,8 @@ filmApp.createParaTwo = document.createElement('p');
 filmApp.createImg = document.createElement('img');
 filmApp.actorCount = 0;
 
+// Create namespace objects to parse API search parameters based on dropdown selections
+    // none or "" is used for 'I dunno' selections
 filmApp.decade = {
     'none': ['', ''],
     '1970': ['1970-01-01', '1979-12-31'],
@@ -64,92 +80,42 @@ filmApp.ratings = {
 // Set API properties to namespace
 filmApp.apiKey = "35d6e1fc2fa9c724779e6903ab30320b";
 
-// Define method to call API targeting user-selected genre
+// Perform first API call (apiUrlDiscover) for films based on user-selected genre, decade of film, and rating
 filmApp.getFilmID = (queryGenre, queryDecade, queryRating) => {
+
     // Declaring url property for first API call to find movie IDs
     filmApp.apiUrlDiscover = "https://api.themoviedb.org/3/discover/movie";
 
     const url = new URL(filmApp.apiUrlDiscover);
 
-
-
+    // Search parameters for apiUrlDiscover
     url.search = new URLSearchParams({
         api_key: filmApp.apiKey,
         with_genres: queryGenre,
-        'primary_release_date.gte': filmApp.decade[queryDecade][0],
         'primary_release_date.lte': filmApp.decade[queryDecade][1],
+        'primary_release_date.gte': filmApp.decade[queryDecade][0],
         'certification_country': 'US',
-
         'certification.lte': filmApp.ratings[queryRating][0],
-
         'certification.gte': filmApp.ratings[queryRating][1],
-
-        // 'certification.gte': queryRating,
         'sort_by': 'vote_count.desc'
-        
-            // https://www.themoviedb.org/talk/5daf6eb0ae36680011d7e6ee
-                // Action          28
-                // Adventure       12
-                // Animation       16
-                // Comedy          35
-                // Crime           80
-                // Documentary     99
-                // Drama           18
-                // Family          10751
-                // Fantasy         14
-                // History         36
-                // Horror          27
-                // Music           10402
-                // Mystery         9648
-                // Romance         10749
-                // Science Fiction 878
-                // TV Movie        10770
-                // Thriller        53
-                // War             10752
-                // Western         37
-
-                        // Additional query strings
-                            // with_cast: 287,
-                            // 'primary_release_date.gte': '1997-01-01',
-                            // 'primary_release_date.lte': '2003-01-01',
-                            // 'sort_by': 'popularity.desc' 'vote_average.desc' (this is default)
-                            // 'certification_country': 'US',
-                            // 'certification': 'G'
-                                // NR, G, PG, PG-13, R, NC-17
-
     })
 
     fetch(url).then((response) => {
         return response.json();
-    })
-    .then ((jsonResponse) => {
+    }).then ((jsonResponse) => {
 
-        console.log("CONSOLE LOG FROM JSON", jsonResponse);
-
-        console.log("---------THIS IS A ", filmApp.ratings[queryRating], " MOVIE--------------");
-
-        console.log(queryDecade);
-
-        console.log(filmApp.decade[queryDecade]);
-
-        console.log("RATING", queryRating);
-
+        // Creates random index based on length of the movies list in API call.  Used to pass a random movie ID and movie title to the next API call
         let randomizeMovie = Math.floor(Math.random() * jsonResponse.results.length);
-        
-        console.log("rando number", randomizeMovie);
-
-        console.log("actor ID", jsonResponse.results[randomizeMovie]);
         
         filmApp.getActor(jsonResponse.results[randomizeMovie].id, jsonResponse.results[randomizeMovie].title);
     })
 
 };
 
-// Method to call API for list of actors in movie ID list
+// Perform second API call (apiUrlCredits) for actors based on previously generated films
 filmApp.getActor = (filmId, filmTitle) => {
-    // Declaring url property for second API call to find actor
+    // Declaring url property for second API call to find actor and actor image
     filmApp.apiUrlCredits = `https://api.themoviedb.org/3/movie/${filmId}/credits`;
-    filmApp.apiUrlImg = `https://image.tmdb.org/t/p/w300/`;
 
     const url = new URL(filmApp.apiUrlCredits);
 
@@ -159,52 +125,36 @@ filmApp.getActor = (filmId, filmTitle) => {
 
     fetch(url).then((response) => {
         return response.json();
-    })
-    .then ((jsonResponse) => {
+    }).then ((jsonResponse) => {
 
-        console.log(jsonResponse);
-
-        console.log(filmTitle);
-
+        // Creates random index based on length of the cast list in API call.  Used to select a random actor from a random movie to be displayed
         let randomizeActor = Math.floor(Math.random() * jsonResponse.cast.length);
 
-        console.log('random actor', randomizeActor);
-
-        console.log(jsonResponse.cast.length);
+        // Clears out element that will be appended to on each click for next actor
         filmApp.resultDivEl.innerText = '';
-        filmApp.displayActor(jsonResponse.cast[randomizeActor].name, jsonResponse.cast[randomizeActor].profile_path, jsonResponse.cast[randomizeActor].character, filmTitle, jsonResponse.cast.length);
+
+        filmApp.displayActor(jsonResponse.cast[randomizeActor].name, jsonResponse.cast[randomizeActor].profile_path, jsonResponse.cast[randomizeActor].character, filmTitle);
     })
 }
 
+// Display name, image, character name, movie title on the page
+filmApp.displayActor = (actorName, imgPath, characterName, filmTitle) => {
 
-
-// Display name on the page
-
-filmApp.displayActor = (actorList, imgList, characterName, filmTitle, castLength) => {
-        // filmApp.createPara.innerText = actorList[filmApp.actorCount];
-        // filmApp.resultDivEl.appendChild(filmApp.createPara);
-
-        // filmApp.createImg.src = `https://image.tmdb.org/t/p/w300/` + imgList[filmApp.actorCount];
-        // filmApp.createImg.alt = `Headshot of the actor ${actorList[filmApp.actorCount]}`;
-        // filmApp.resultDivEl.appendChild(filmApp.createImg);
-
-
-        filmApp.createPara.innerText = actorList;
+        filmApp.createPara.innerText = actorName;
         filmApp.resultDivEl.appendChild(filmApp.createPara);
 
-
-
-        if (imgList == null) {
+        // Condition based on whether an actor has a picture URL
+        if (imgPath == null) {
             filmApp.createImg.src = `../assets/noProfilePic.jpg`;
             filmApp.createImg.alt = `Blank headshot`;
             filmApp.resultDivEl.append(filmApp.createImg);
         } else {
-            filmApp.createImg.src = `https://image.tmdb.org/t/p/w300/` + imgList;
-            filmApp.createImg.alt = `Headshot of the actor ${actorList}`;
+            filmApp.createImg.src = `https://image.tmdb.org/t/p/w300/` + imgPath;
+            filmApp.createImg.alt = `Headshot of the actor ${actorName}`;
             filmApp.resultDivEl.appendChild(filmApp.createImg);
         }
 
-
+        // Condition based on whether an actor has a listed character name in their respective film
         if (characterName == '') {
             filmApp.createParaTwo.innerText = `You may know them as some person from ${filmTitle}.`;
         } else {
@@ -213,19 +163,21 @@ filmApp.displayActor = (actorList, imgList, characterName, filmTitle, castLength
         
         filmApp.resultDivEl.appendChild(filmApp.createParaTwo);
 
+        // Add to the counter after each actor is rendered
         filmApp.actorCount++;
 
 }
 
-// Event Listener for the button
-
+// Event Listeners for find actor button
 filmApp.findActor = () => {
     filmApp.findButtonEl.addEventListener ('click', () => {
+
+        // If all dropdowns are not selected
         if (filmApp.dropdownGenreEl.value == 'selectOne' || filmApp.dropdownDecadeEl.value == 'selectOne' || filmApp.dropdownRatingEl.value == 'selectOne') {
             filmApp.createPara.innerText = "";
             filmApp.createPara.innerText = "We need some information!!!";
             filmApp.resultDivEl.append(filmApp.createPara);
-
+        // If you reach the end of the actor counter, the app will cease to call the API
         } else if (filmApp.actorCount > 9) { 
             filmApp.createPara.innerText = "Someone we've never heard of!";
             filmApp.createImg.src = `../assets/safiCantFind.jpg`;
@@ -233,8 +185,6 @@ filmApp.findActor = () => {
             filmApp.resultDivEl.appendChild(filmApp.createImg);
             filmApp.createParaTwo.innerText = '';
         } else {
-            console.log("you have selected the shuffle!");
-            console.log(filmApp.dropdownGenreEl.value);
             filmApp.getFilmID(filmApp.dropdownGenreEl.value, filmApp.dropdownDecadeEl.value, filmApp.dropdownRatingEl.value);
             filmApp.findButtonEl.textContent = "No...It's not them...";
             filmApp.dropdownGenreEl.disabled = true;
@@ -244,19 +194,18 @@ filmApp.findActor = () => {
     })
 }
 
+// Event Listeners for reset button
 filmApp.reset = () => {
-    document.querySelector('#reset').addEventListener ('click', () => {
-        console.log("hey");
+    filmApp.resetButtonEl.addEventListener ('click', () => {
         filmApp.actorCount = 0;
         filmApp.findButtonEl.textContent = "Find Actor";
         filmApp.dropdownGenreEl.value = "selectOne";
         filmApp.dropdownDecadeEl.value = "selectOne";
         filmApp.dropdownRatingEl.value = "selectOne";
-        const pElement = document.querySelector("#suggestedActor p");
-        pElement.innerText = "";
+        filmApp.createPara.innerText = '';
+        filmApp.createParaTwo.innerText = '';
         filmApp.createImg.src = ``;
         filmApp.createImg.alt = ``;
-        filmApp.createParaTwo.innerText = '';
         filmApp.dropdownGenreEl.disabled = false;
         filmApp.dropdownDecadeEl.disabled = false;
         filmApp.dropdownRatingEl.disabled = false;
@@ -270,5 +219,4 @@ filmApp.init = () => {
 }
 
 // Call the init method
-
 filmApp.init();
