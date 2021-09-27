@@ -145,7 +145,7 @@ filmApp.displayActor = (actorName, imgPath, characterName, filmTitle) => {
 
         // Condition based on whether an actor has a picture URL
         if (imgPath == null) {
-            filmApp.createImg.src = `../assets/noProfilePic.jpg`;
+            filmApp.createImg.src = `./assets/noProfilePic.jpg`;
             filmApp.createImg.alt = `Blank headshot`;
             filmApp.resultDivEl.append(filmApp.createImg);
         } else {
@@ -180,7 +180,7 @@ filmApp.findActor = () => {
         // If you reach the end of the actor counter, the app will cease to call the API
         } else if (filmApp.actorCount > 9) { 
             filmApp.createPara.innerText = "Someone we've never heard of!";
-            filmApp.createImg.src = `../assets/safiCantFind.jpg`;
+            filmApp.createImg.src = `./assets/safiCantFind.jpg`;
             filmApp.createImg.alt = `Angry man with beard and glasses`;
             filmApp.resultDivEl.appendChild(filmApp.createImg);
             filmApp.createParaTwo.innerText = '';
