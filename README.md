@@ -5,5 +5,3 @@ This application is intended to help when an actor's name is on the tip-on-your-
 Created by Kevin Kilarski and Bree Horton.  Additional work post-fork provided by Kevin Kilarski.
 
 [View it Live Here!](https://that-actor-from-that-thing.netlify.app/)
-
-Test
