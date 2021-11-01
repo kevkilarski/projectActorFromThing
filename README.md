@@ -1,4 +1,4 @@
-That Actor from that Thing
+#That Actor from that Thing
 
 This application is intended to help when an actor's name is on the tip-on-your-tongue and you need a little help. It uses the TMDB API to select and render actors based on movie details provided by the user.
 
