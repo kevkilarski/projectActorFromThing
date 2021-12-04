@@ -238,9 +238,13 @@ p {
   margin: 0;
 }
 
+.break {
+  display: block;
+}
+
 header {
   background: url("../assets/heroImageBlurred.jpg") center;
-  background-size: cover;
+  background-position: cover;
   height: 55vh;
 }
 
