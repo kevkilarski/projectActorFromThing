@@ -12,79 +12,85 @@
     
 </head>
 <body>
-    <header class="bgImage">
-        <div></div>
-        <div class="wrapper">
-            <h1>That Actor <span class="h1Break">from that Thing</span></h1>
-        </div> 
-    </header>
-    <main>
-        <section class="questions">
-            <div class="wrapper">
-                <p>Have you ever wanted to share some juicy gossip or rave about a famous actor, but just can't come up with their name? That Actor from that Thing is here to help!! Simply enter the information you do remember, and we'll do the rest!</p>
-                <label for="rating">You know, they're in that
-                    <select name="rating" id="rating">
-                        <option value="selectOne" selected="selected" disabled>Select Rating</option>
-                        <option value="none">I dunno 🤷‍♀️</option>
-                        <option value="kid">Kid Friendly</option>
-                        <option value="risky">Risky</option>
-                    </select>
-                </label>
-                <label for="genre"> 
-                    <select name="genre" id="genre">
-                        <option value="selectOne" selected="selected" disabled>Select Genre</option>
-                        <option value="">I dunno 🤷‍♀️</option>
-                        <option value="28">Action</option>
-                        <option value="12">Adventure</option>
-                        <option value="16">Animation</option>
-                        <option value="35">Comedy</option>
-                        <option value="80">Crime</option>
-                        <option value="99">Documentary</option>
-                        <option value="18">Drama</option>
-                        <option value="10751">Family</option>
-                        <option value="14">Fantasy</option>
-                        <option value="36">History</option>
-                        <option value="27">Horror</option>
-                        <option value="10402">Music</option>
-                        <option value="9648">Mystery</option>
-                        <option value="10749">Romance</option>
-                        <option value="878">Science Fiction</option>
-                        <option value="10770">TV Movie</option>
-                        <option value="53">Thriller</option>
-                        <option value="10752">War</option>
-                        <option value="37">Western</option>
-                    </select>
-                </label>
-                <label for="decade">
-                    movie from the 
-                    <select name="decade" id="decade">
-                        <option value="selectOne" selected="selected" disabled>Select Decade</option>
-                        <option value="none">I dunno 🤷‍♀️</option>
-                        <option value="1970">70's</option>
-                        <option value="1980">80's</option>
-                        <option value="1990">90's</option>
-                        <option value="2000">2000's</option>
-                        <option value="2010">2010's</option>
-                        <option value="2020">2020's</option>
-                    </select>.
-                </label>
-                
-            </div>
-        </section>
-        <section class="output">
-            <div class="wrapper">
-                <h2>Oh! You must be thinking of:</h2>
-                <div id="suggestedActor"></div>
-                <div class="buttonContainer">
-                    <button id="shuffle">Find an Actor</button>
-                    <button id="reset">Hmmmm...Let's try someone else</button>
-                </div>   
-            </div>
-        </section>
-    </main>
-    <footer>
-        <p>Created at <a href="https://junocollege.com/">Juno College</a> by Kevin Kilarski and Bree Horton, with help from the <a href="https://www.themoviedb.org/">TMDB API</a>.</p>
-    </footer>
+    <div class="bodyVerticalContainer">
+        <div class="bodyVerticalHeader">
+            <header>
+                <div class="wrapper">
+                    <div class="headerTitle">
+                        <h1>That Actor <span class="h1Break">from that Thing</span></h1>
+                        <p>What was their name again?  Simply enter the information you do remember, and we'll help locate the actor on the tip of your tongue.</p>
+                    </div>
+                    <div class="headerDetails">
+                        <p>Created at <a href="https://junocollege.com/">Juno College</a> by Kevin Kilarski and Bree Horton, with help from the <a href="https://www.themoviedb.org/">TMDB API</a>.</p>
+                    </div>
+                </div> 
+            </header>
+        </div>
+        <div class="bodyVerticalMain">
+            <main>
+                <section class="questions">
+                    <div class="wrapper">
+                        <label for="rating">They're in that
+                            <select name="rating" id="rating">
+                                <option value="selectOne" selected="selected" disabled>Select Rating</option>
+                                <option value="none">I dunno 🤷‍♀️</option>
+                                <option value="kid">Kid Friendly</option>
+                                <option value="risky">Risky</option>
+                            </select>
+                        </label>
+                        <label for="genre"> 
+                            <select name="genre" id="genre">
+                                <option value="selectOne" selected="selected" disabled>Select Genre</option>
+                                <option value="">I dunno 🤷‍♀️</option>
+                                <option value="28">Action</option>
+                                <option value="12">Adventure</option>
+                                <option value="16">Animation</option>
+                                <option value="35">Comedy</option>
+                                <option value="80">Crime</option>
+                                <option value="99">Documentary</option>
+                                <option value="18">Drama</option>
+                                <option value="10751">Family</option>
+                                <option value="14">Fantasy</option>
+                                <option value="36">History</option>
+                                <option value="27">Horror</option>
+                                <option value="10402">Music</option>
+                                <option value="9648">Mystery</option>
+                                <option value="10749">Romance</option>
+                                <option value="878">Science Fiction</option>
+                                <option value="10770">TV Movie</option>
+                                <option value="53">Thriller</option>
+                                <option value="10752">War</option>
+                                <option value="37">Western</option>
+                            </select>
+                        </label>
+                        <div class="break"></div>
+                        <label for="decade">movie from the
+                            <select name="decade" id="decade">
+                                <option value="selectOne" selected="selected" disabled>Select Decade</option>
+                                <option value="none">I dunno 🤷‍♀️</option>
+                                <option value="1970">70's</option>
+                                <option value="1980">80's</option>
+                                <option value="1990">90's</option>
+                                <option value="2000">2000's</option>
+                                <option value="2010">2010's</option>
+                                <option value="2020">2020's</option>
+                            </select> I think...
+                        </label>
+                    </div>
+                </section>
+                <section class="output">
+                    <div class="wrapper">
+                        <button class="shuffleButton" id="shuffle">Could it be...</button>
+                        <!-- <div class="buttonContainer"> -->
+                        <button class="clearButton" id="reset">Clear</button>
+                        <!-- </div>   -->
+                        <h2 id="youMustBeThinking"></h2>
+                        <div class="suggestedActor" id="suggestedActor"></div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
 
     <script src="./scripts/script.js"></script>
 </body>

@@ -57,6 +57,7 @@ filmApp.dropdownRatingEl = document.querySelector('#rating');
 filmApp.createPara = document.createElement('p');
 filmApp.createParaTwo = document.createElement('p');
 filmApp.createImg = document.createElement('img');
+filmApp.thinkingText = document.querySelector('#youMustBeThinking');
 filmApp.actorCount = 0;
 
 // Create namespace objects to parse API search parameters based on dropdown selections
@@ -143,13 +144,15 @@ filmApp.displayActor = (actorName, imgPath, characterName, filmTitle) => {
         filmApp.createPara.innerText = actorName;
         filmApp.resultDivEl.appendChild(filmApp.createPara);
 
+        filmApp.thinkingText.innerText = "Oh! You must be thinking of:";
+
         // Condition based on whether an actor has a picture URL
         if (imgPath == null) {
-            filmApp.createImg.src = `./assets/noProfilePic.jpg`;
+            filmApp.createImg.src = `./assets/noProfilePic2.jpg`;
             filmApp.createImg.alt = `Blank headshot`;
             filmApp.resultDivEl.append(filmApp.createImg);
         } else {
-            filmApp.createImg.src = `https://image.tmdb.org/t/p/w300/` + imgPath;
+            filmApp.createImg.src = `https://image.tmdb.org/t/p/w200/` + imgPath;
             filmApp.createImg.alt = `Headshot of the actor ${actorName}`;
             filmApp.resultDivEl.appendChild(filmApp.createImg);
         }
@@ -158,7 +161,7 @@ filmApp.displayActor = (actorName, imgPath, characterName, filmTitle) => {
         if (characterName == '') {
             filmApp.createParaTwo.innerText = `You may know them as some person from ${filmTitle}.`;
         } else {
-            filmApp.createParaTwo.innerText = `You may know them as ${characterName} from ${filmTitle}.`;
+            filmApp.createParaTwo.innerText = `You may know them as ${characterName} from "${filmTitle}".`;
         }
         
         filmApp.resultDivEl.appendChild(filmApp.createParaTwo);
@@ -180,13 +183,13 @@ filmApp.findActor = () => {
         // If you reach the end of the actor counter, the app will cease to call the API
         } else if (filmApp.actorCount > 9) { 
             filmApp.createPara.innerText = "Someone we've never heard of!";
-            filmApp.createImg.src = `./assets/safiCantFind.jpg`;
+            filmApp.createImg.src = `./assets/cantFind2.jpg`;
             filmApp.createImg.alt = `Angry man with beard and glasses`;
             filmApp.resultDivEl.appendChild(filmApp.createImg);
             filmApp.createParaTwo.innerText = '';
         } else {
             filmApp.getFilmID(filmApp.dropdownGenreEl.value, filmApp.dropdownDecadeEl.value, filmApp.dropdownRatingEl.value);
-            filmApp.findButtonEl.textContent = "No...It's not them...";
+            filmApp.findButtonEl.textContent = "No... It's not them...";
             filmApp.dropdownGenreEl.disabled = true;
             filmApp.dropdownDecadeEl.disabled = true;
             filmApp.dropdownRatingEl.disabled = true;
@@ -198,7 +201,8 @@ filmApp.findActor = () => {
 filmApp.reset = () => {
     filmApp.resetButtonEl.addEventListener ('click', () => {
         filmApp.actorCount = 0;
-        filmApp.findButtonEl.textContent = "Find Actor";
+        filmApp.findButtonEl.textContent = "Could it be...";
+        filmApp.thinkingText.innerText = "";
         filmApp.dropdownGenreEl.value = "selectOne";
         filmApp.dropdownDecadeEl.value = "selectOne";
         filmApp.dropdownRatingEl.value = "selectOne";
