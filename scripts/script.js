@@ -79,13 +79,13 @@ filmApp.ratings = {
 }
 
 // Set API properties to namespace
-filmApp.apiKey = "35d6e1fc2fa9c724779e6903ab30320b";
+filmApp.apiKey = '35d6e1fc2fa9c724779e6903ab30320b';
 
 // Perform first API call (apiUrlDiscover) for films based on user-selected genre, decade of film, and rating
 filmApp.getFilmID = (queryGenre, queryDecade, queryRating) => {
 
     // Declaring url property for first API call to find movie IDs
-    filmApp.apiUrlDiscover = "https://api.themoviedb.org/3/discover/movie";
+    filmApp.apiUrlDiscover = 'https://api.themoviedb.org/3/discover/movie';
 
     const url = new URL(filmApp.apiUrlDiscover);
 
@@ -144,7 +144,7 @@ filmApp.displayActor = (actorName, imgPath, characterName, filmTitle) => {
         filmApp.createPara.innerText = actorName;
         filmApp.resultDivEl.appendChild(filmApp.createPara);
 
-        filmApp.thinkingText.innerText = "Oh! You must be thinking of:";
+        filmApp.thinkingText.innerText = `Oh! You must be thinking of:`;
 
         // Condition based on whether an actor has a picture URL
         if (imgPath == null) {
@@ -159,7 +159,7 @@ filmApp.displayActor = (actorName, imgPath, characterName, filmTitle) => {
 
         // Condition based on whether an actor has a listed character name in their respective film
         if (characterName == '') {
-            filmApp.createParaTwo.innerText = `You may know them as some person from ${filmTitle}.`;
+            filmApp.createParaTwo.innerText = `You may know them as some person from "${filmTitle}."`;
         } else {
             filmApp.createParaTwo.innerText = `You may know them as ${characterName} from "${filmTitle}".`;
         }
@@ -176,20 +176,21 @@ filmApp.findActor = () => {
     filmApp.findButtonEl.addEventListener ('click', () => {
 
         // If all dropdowns are not selected
-        if (filmApp.dropdownGenreEl.value == 'selectOne' || filmApp.dropdownDecadeEl.value == 'selectOne' || filmApp.dropdownRatingEl.value == 'selectOne') {
-            filmApp.createPara.innerText = "";
-            filmApp.createPara.innerText = "We need some information!!!";
+        if (filmApp.dropdownGenreEl.value == `selectOne` || filmApp.dropdownDecadeEl.value == `selectOne` || filmApp.dropdownRatingEl.value == `selectOne`) {
+            filmApp.createPara.innerText = ``;
+            filmApp.createPara.innerText = `We need more information before we can uncover your elusive actor!`;
             filmApp.resultDivEl.append(filmApp.createPara);
         // If you reach the end of the actor counter, the app will cease to call the API
         } else if (filmApp.actorCount > 9) { 
-            filmApp.createPara.innerText = "Someone we've never heard of!";
+            filmApp.createPara.innerText = `Someone we've never heard of!`;
             filmApp.createImg.src = `./assets/cantFind2.jpg`;
             filmApp.createImg.alt = `Angry man with beard and glasses`;
-            filmApp.resultDivEl.appendChild(filmApp.createImg);
-            filmApp.createParaTwo.innerText = '';
+            filmApp.resultDivEl.append(filmApp.createImg);
+            filmApp.createParaTwo.innerText = `Try again and we'll see if that actor can be found (how many could there be?)`;
+            filmApp.resultDivEl.appendChild(filmApp.createParaTwo);
         } else {
             filmApp.getFilmID(filmApp.dropdownGenreEl.value, filmApp.dropdownDecadeEl.value, filmApp.dropdownRatingEl.value);
-            filmApp.findButtonEl.textContent = "No... It's not them...";
+            filmApp.findButtonEl.textContent = `No... It's not them...`;
             filmApp.dropdownGenreEl.disabled = true;
             filmApp.dropdownDecadeEl.disabled = true;
             filmApp.dropdownRatingEl.disabled = true;
@@ -201,13 +202,13 @@ filmApp.findActor = () => {
 filmApp.reset = () => {
     filmApp.resetButtonEl.addEventListener ('click', () => {
         filmApp.actorCount = 0;
-        filmApp.findButtonEl.textContent = "Could it be...";
-        filmApp.thinkingText.innerText = "";
-        filmApp.dropdownGenreEl.value = "selectOne";
-        filmApp.dropdownDecadeEl.value = "selectOne";
-        filmApp.dropdownRatingEl.value = "selectOne";
-        filmApp.createPara.innerText = '';
-        filmApp.createParaTwo.innerText = '';
+        filmApp.findButtonEl.textContent = `Could it be...`;
+        filmApp.thinkingText.innerText = ``;
+        filmApp.dropdownGenreEl.value = `selectOne`;
+        filmApp.dropdownDecadeEl.value = `selectOne`;
+        filmApp.dropdownRatingEl.value = `selectOne`;
+        filmApp.createPara.innerText = ``;
+        filmApp.createParaTwo.innerText = ``;
         filmApp.createImg.src = ``;
         filmApp.createImg.alt = ``;
         filmApp.dropdownGenreEl.disabled = false;

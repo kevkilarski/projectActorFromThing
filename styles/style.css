@@ -210,6 +210,10 @@ button {
   font-family: "Oxygen", sans-serif;
   font-size: 40px;
   font-size: 2rem;
+  border: none;
+  padding: 0.6rem 1rem;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 
 footer p {
@@ -372,39 +376,33 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  width: 22rem;
+  margin: 0 auto;
 }
 
 .shuffleButton {
-  width: 50%;
-  padding: 10px 40px;
   background-color: #ba4e4e;
   color: #f0f0f0;
-  border: none;
-  -webkit-transition: 0.2s ease-in-out;
-  transition: 0.2s ease-in-out;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 72%;
+          flex: 0 0 72%;
+  border: 0.2rem solid #ba4e4e;
+  border-right: none;
 }
 
 .shuffleButton:hover {
   color: #ba4e4e;
-  background-color: #f0f0f0;
+  background-color: #2c2c2c;
 }
 
 .clearButton {
-  width: 50%;
-  padding: 10px 40px;
-  margin: 20px 0;
   background-color: #f0f0f0;
   color: #ba4e4e;
-  border: 3px solid #ba4e4e;
-  -webkit-transition: 0.2s ease-in-out;
-  transition: 0.2s ease-in-out;
+  border: 0.2rem solid #ba4e4e;
+  border-left: none;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 28%;
+          flex: 0 0 28%;
 }
 
 .clearButton:hover {
@@ -413,6 +411,7 @@ label {
 }
 
 .suggestedActor p {
+  font-size: 32px;
   font-size: 1.6rem;
   padding: 0.5rem;
 }
@@ -436,21 +435,13 @@ label {
   }
 
   h1 {
+    font-size: 82px;
     font-size: 4.1rem;
   }
 
   h2 {
     font-size: 38px;
     font-size: 1.9rem;
-  }
-
-  button {
-    font-size: 35px;
-    font-size: 1.75rem;
-  }
-
-  .shuffleButton, .clearButton {
-    width: 60%;
   }
 }
 @media (max-width: 1120px) {
@@ -488,12 +479,16 @@ label {
   }
 
   button {
-    font-size: 32px;
-    font-size: 1.6rem;
+    font-size: 35px;
+    font-size: 1.75rem;
+  }
+
+  .buttonContainer {
+    width: 20rem;
   }
 
   .shuffleButton, .clearButton {
-    width: 50%;
+    padding: 0.5rem;
   }
 
   .suggestedActor p:last-child {
@@ -523,6 +518,15 @@ label {
 
   label {
     line-height: 2.5rem;
+  }
+
+  button {
+    font-size: 30px;
+    font-size: 1.5rem;
+  }
+
+  .buttonContainer {
+    width: 16rem;
   }
 }
 @media (max-width: 450px) {

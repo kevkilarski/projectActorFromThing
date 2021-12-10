@@ -114,32 +114,30 @@ label {
 
 .buttonContainer {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 22rem;
+    margin: 0 auto;
 }
 
 .shuffleButton {
-    width: 50%;
-    padding: 10px 40px;
     background-color: $primaryRed;
     color: $primaryWhite;
-    border: none;
-    transition: 0.2s ease-in-out;
+    flex: 0 0 72%;
+    border: 0.2rem solid $primaryRed;
+    border-right: none;
+
 }
 
 .shuffleButton:hover {
     color: $primaryRed;
-    background-color: $primaryWhite;
+    background-color: $primaryBlack;
 }
 
 .clearButton {
-    width: 50%;
-    padding: 10px 40px;
-    margin: 20px 0;
     background-color: $primaryWhite;
     color: $primaryRed;
-    border: 3px solid $primaryRed;
-    transition: 0.2s ease-in-out;
+    border: 0.2rem solid $primaryRed;
+    border-left: none;
+    flex: 0 0 28%;
 }
 
 .clearButton:hover {
@@ -148,7 +146,7 @@ label {
 }
 
 .suggestedActor p {
-    font-size: 1.6rem;
+    @include fontSize(32);
     padding: 0.5rem;
 }
 
@@ -190,20 +188,20 @@ label {
     }
     
     h1 {
-        font-size: 4.1rem;
+        @include fontSize(82);
     }
 
     h2 {
         @include fontSize(38);
     }
 
-    button {
-        @include fontSize(35);
-    }
+    // button {
+    //     @include fontSize(35);
+    // }
 
-    .shuffleButton, .clearButton {
-        width: 60%;
-    }
+    // .shuffleButton, .clearButton {
+    //     width: 60%;
+    // }
 }
 
 @media (max-width: 1120px) {
@@ -238,11 +236,15 @@ label {
     }
 
     button {
-        @include fontSize(32);
+        @include fontSize(35);
+    }
+
+    .buttonContainer {
+        width: 20rem;
     }
 
     .shuffleButton, .clearButton {
-        width: 50%;
+        padding: 0.5rem;
     }
 
     .suggestedActor p:last-child {
@@ -274,6 +276,14 @@ label {
 
     label {
         line-height: 2.5rem;
+    }
+
+    button {
+        @include fontSize(30);
+    }
+
+    .buttonContainer {
+        width: 16rem;
     }
 
 
