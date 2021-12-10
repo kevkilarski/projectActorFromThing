@@ -218,7 +218,7 @@ footer p {
 }
 
 body {
-  background: #c3f5ec;
+  background: #f0f0f0;
   color: #2c2c2c;
 }
 
@@ -341,7 +341,8 @@ h1 {
 main {
   padding-top: 4rem;
   height: 100%;
-  background: radial-gradient(white, rgba(255, 255, 255, 0.2));
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.2)), to(#f0f0f0));
+  background: linear-gradient(rgba(255, 255, 255, 0.2), #f0f0f0);
 }
 
 .questions .wrapper {
@@ -425,25 +426,31 @@ label {
   padding: 0.5rem;
 }
 
-footer {
-  position: fixed;
-  width: 60vw;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-color: #2c2c2c;
-}
-footer p {
-  color: #f0f0f0;
-  text-align: center;
-}
-footer p a {
-  color: #f0f0f0;
-}
-
 @media (max-width: 1380px) {
+  .bodyVerticalHeader {
+    width: 45vw;
+  }
+
+  .bodyVerticalMain {
+    margin-left: 45vw;
+  }
+
   h1 {
     font-size: 4.1rem;
+  }
+
+  h2 {
+    font-size: 38px;
+    font-size: 1.9rem;
+  }
+
+  button {
+    font-size: 35px;
+    font-size: 1.75rem;
+  }
+
+  .shuffleButton, .clearButton {
+    width: 60%;
   }
 }
 @media (max-width: 1120px) {
@@ -453,33 +460,78 @@ footer p a {
         -ms-flex-direction: column;
             flex-direction: column;
   }
-}
-@media (max-width: 780px) {
-  h2 {
-    font-size: 40px;
-    font-size: 2rem;
-  }
 
-  p,
-label {
-    font-size: 25px;
-    font-size: 1.25rem;
-  }
-
-  button {
-    width: 75%;
-    font-size: 30px;
-    font-size: 1.5rem;
-  }
-}
-@media (max-width: 375px) {
-  .questions p,
-h2 {
-    margin: 25px 0;
-  }
-
-  button {
+  .bodyVerticalHeader {
+    position: static;
     width: 100%;
-    margin: 15px 0;
+    height: 80vh;
+    background-position: bottom 50% right 50%;
+  }
+
+  header .wrapper {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+
+  .headerTitle {
+    gap: 2rem;
+  }
+
+  .headerDetails {
+    margin-top: 4rem;
+  }
+
+  .bodyVerticalMain {
+    margin-left: 0;
+    height: 60vh;
+  }
+
+  button {
+    font-size: 32px;
+    font-size: 1.6rem;
+  }
+
+  .shuffleButton, .clearButton {
+    width: 50%;
+  }
+
+  .suggestedActor p:last-child {
+    margin-bottom: 2rem;
+  }
+}
+@media (max-width: 640px) {
+  .bodyVerticalHeader {
+    min-height: 90vh;
+  }
+
+  .bodyVerticalMain {
+    min-height: 50vh;
+  }
+
+  main {
+    height: 100%;
+  }
+
+  .questions .wrapper {
+    width: 45%;
+  }
+
+  .break {
+    padding: 0rem;
+  }
+
+  label {
+    line-height: 2.5rem;
+  }
+}
+@media (max-width: 450px) {
+  h1 {
+    font-size: 60px;
+    font-size: 3rem;
+  }
+
+  .questions .wrapper {
+    width: 65%;
   }
 }

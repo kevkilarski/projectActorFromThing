@@ -86,7 +86,7 @@ h1 {
 main {
     padding-top: 4rem;
     height: 100%;
-    background: radial-gradient(white, rgba(255, 255, 255, 0.2));
+    background: linear-gradient(rgba(255, 255, 255, 0.2), $primaryWhite);
 }
 
 .questions .wrapper {
@@ -163,26 +163,46 @@ label {
 
 // FOOTER STYLES
 
-footer {
-    position: fixed;
-    width: 60vw;
-    // margin-top: 20%;
-    align-items: center;
-    background-color: $primaryBlack;
-        p {
-            color: $primaryWhite;
-            text-align: center;
-                a {
-                    color: $primaryWhite;
-                }
-        }
-}
+// footer {
+//     position: fixed;
+//     width: 60vw;
+//     // margin-top: 20%;
+//     align-items: center;
+//     background-color: $primaryBlack;
+//         p {
+//             color: $primaryWhite;
+//             text-align: center;
+//                 a {
+//                     color: $primaryWhite;
+//                 }
+//         }
+// }
 
 // MEDIA QUERIES
 
 @media (max-width: 1380px) {
+    .bodyVerticalHeader {
+        width: 45vw;
+    }
+
+    .bodyVerticalMain {
+        margin-left: 45vw;
+    }
+    
     h1 {
         font-size: 4.1rem;
+    }
+
+    h2 {
+        @include fontSize(38);
+    }
+
+    button {
+        @include fontSize(35);
+    }
+
+    .shuffleButton, .clearButton {
+        width: 60%;
     }
 }
 
@@ -190,30 +210,106 @@ footer {
     .bodyVerticalContainer {
         flex-direction: column;
     }
-    // Remove fixed
-}
 
-@media (max-width: 780px) {
-    h2 {
-        @include fontSize(40);
-    }
-    p ,
-    label {
-        @include fontSize(25);
-    }
-    button {
-        width: 75%;
-        @include fontSize(30);
-    }
-}
-
-@media (max-width: 375px) {
-    .questions p,
-    h2 {
-        margin: 25px 0;
-    }
-    button {
+    .bodyVerticalHeader {
+        position: static;
         width: 100%;
-        margin: 15px 0;
+        height: 80vh;
+        background-position: bottom 50% right 50%;
+    }
+
+    header .wrapper {
+        justify-content: center;
+        // margin-bottom: 6rem;
+
+    }
+
+    .headerTitle {
+        gap: 2rem;
+    }
+
+    .headerDetails {
+        margin-top: 4rem;
+    }
+    
+    .bodyVerticalMain {
+        margin-left: 0;
+        height: 60vh;
+    }
+
+    button {
+        @include fontSize(32);
+    }
+
+    .shuffleButton, .clearButton {
+        width: 50%;
+    }
+
+    .suggestedActor p:last-child {
+        margin-bottom: 2rem;
     }
 }
+
+@media (max-width: 640px) {
+
+    .bodyVerticalHeader {
+        min-height: 90vh;
+    }
+
+    .bodyVerticalMain {
+        min-height: 50vh;
+    }
+
+    main {
+        height: 100%;
+    }
+
+    .questions .wrapper {
+        width: 45%;
+    }
+
+    .break {
+        padding: 0rem;
+    }
+
+    label {
+        line-height: 2.5rem;
+    }
+
+
+}
+
+@media (max-width: 450px) {
+    h1 {
+        @include fontSize(60);
+    }
+
+    .questions .wrapper {
+        width: 65%;
+    }
+}
+
+// @media (max-width: 780px) {
+//     h2 {
+//         @include fontSize(40);
+//     }
+//     p ,
+//     label {
+//         @include fontSize(25);
+//     }
+//     button {
+//         width: 75%;
+//         @include fontSize(30);
+//     }
+// }
+
+// @media (max-width: 375px) {
+//     .questions p,
+//     h2 {
+//         margin: 25px 0;
+//     }
+//     button {
+//         width: 100%;
+//         margin: 15px 0;
+//     }
+// }
