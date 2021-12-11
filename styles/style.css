@@ -206,16 +206,6 @@ label {
   letter-spacing: 0.1rem;
 }
 
-button {
-  font-family: "Oxygen", sans-serif;
-  font-size: 40px;
-  font-size: 2rem;
-  border: none;
-  padding: 0.6rem 1rem;
-  -webkit-transition: 0.2s ease-in-out;
-  transition: 0.2s ease-in-out;
-}
-
 footer p {
   font-size: 20px;
   font-size: 1rem;
@@ -236,23 +226,30 @@ img {
   max-width: 100%;
 }
 
-h1,
-h2,
-p {
+h1, h2, p {
   margin: 0;
+}
+
+button {
+  font-family: "Oxygen", sans-serif;
+  font-size: 40px;
+  font-size: 2rem;
+  padding: 0.6rem 1rem;
+  border: none;
 }
 
 .break {
   display: block;
+  padding: 0.5rem;
 }
 
 .bodyVerticalHeader {
-  background: url("../assets/heroHollywoodPurple.jpg");
-  background-size: cover;
+  position: fixed;
+  overflow: hidden;
   height: 100vh;
   width: 40vw;
-  overflow: hidden;
-  position: fixed;
+  background: url("../assets/heroHollywoodPurple.jpg");
+  background-size: cover;
 }
 
 header {
@@ -293,16 +290,16 @@ header .wrapper {
 }
 
 h1 {
-  color: #831a34;
-  text-shadow: 1px 1px 15px white;
+  text-shadow: 1px 1px 10px white;
   text-align: center;
   text-transform: uppercase;
+  color: #831a34;
 }
 
 .headerTitle p {
-  color: #2c2c2c;
-  text-shadow: 2px 2px 10px black;
   text-align: center;
+  color: #2c2c2c;
+  text-shadow: 2px 2px 9px black;
 }
 
 .headerDetails {
@@ -317,9 +314,9 @@ h1 {
   padding: 1rem;
   margin-bottom: 2rem;
   text-align: center;
+  background: radial-gradient(white, rgba(255, 255, 255, 0.2));
   color: #2c2c2c;
   font-weight: 600;
-  background: radial-gradient(white, rgba(255, 255, 255, 0.2));
 }
 
 .headerDetails a {
@@ -334,12 +331,12 @@ h1 {
 }
 
 .bodyVerticalMain {
-  margin-left: 40vw;
-  height: 100vh;
-  background: linear-gradient(15deg, #581258, #ee6a6a);
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
+  margin-left: 40vw;
+  height: 100vh;
+  background: linear-gradient(15deg, #581258, #ee6a6a);
 }
 
 main {
@@ -381,33 +378,33 @@ label {
 }
 
 .shuffleButton {
-  background-color: #ba4e4e;
-  color: #f0f0f0;
   -webkit-box-flex: 0;
       -ms-flex: 0 0 72%;
           flex: 0 0 72%;
   border: 0.2rem solid #ba4e4e;
   border-right: none;
+  background-color: #ba4e4e;
+  color: #f0f0f0;
 }
 
 .shuffleButton:hover {
-  color: #ba4e4e;
   background-color: #2c2c2c;
+  color: #ba4e4e;
 }
 
 .clearButton {
-  background-color: #f0f0f0;
-  color: #ba4e4e;
-  border: 0.2rem solid #ba4e4e;
-  border-left: none;
   -webkit-box-flex: 0;
       -ms-flex: 0 0 28%;
           flex: 0 0 28%;
+  border: 0.2rem solid #ba4e4e;
+  border-left: none;
+  background-color: #f0f0f0;
+  color: #ba4e4e;
 }
 
 .clearButton:hover {
-  color: #f0f0f0;
   background-color: #a1a1a1;
+  color: #f0f0f0;
 }
 
 .suggestedActor p {
@@ -418,11 +415,6 @@ label {
 
 .suggestedActor p:first-child {
   font-weight: 800;
-}
-
-.break {
-  display: block;
-  padding: 0.5rem;
 }
 
 @media (max-width: 1380px) {

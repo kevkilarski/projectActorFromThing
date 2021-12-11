@@ -13,12 +13,18 @@ img {
     max-width: 100%;
 }
 
-h1, 
-h2, 
-p {
+h1, h2, p {
     margin: 0;
+}
+
+button {
+    font-family: 'Oxygen', sans-serif;
+    @include fontSize(40);
+    padding: 0.6rem 1rem;
+    border: none;
 }
 
 .break {
     display: block;
+    padding: 0.5rem;
 }

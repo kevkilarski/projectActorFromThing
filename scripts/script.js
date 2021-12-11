@@ -186,11 +186,14 @@ filmApp.findActor = () => {
             filmApp.createImg.src = `./assets/cantFind2.jpg`;
             filmApp.createImg.alt = `Angry man with beard and glasses`;
             filmApp.resultDivEl.append(filmApp.createImg);
-            filmApp.createParaTwo.innerText = `Try again and we'll see if that actor can be found (how many could there be?)`;
+            filmApp.createParaTwo.innerText = `Try a new search and we'll see if that actor can be found (how many could there be?)`;
             filmApp.resultDivEl.appendChild(filmApp.createParaTwo);
+            filmApp.findButtonEl.style.display = "none";
+            filmApp.resetButtonEl.style.flexBasis = "100%";
+            filmApp.resetButtonEl.style.borderLeft = "0.2rem solid #ba4e4e";
         } else {
             filmApp.getFilmID(filmApp.dropdownGenreEl.value, filmApp.dropdownDecadeEl.value, filmApp.dropdownRatingEl.value);
-            filmApp.findButtonEl.textContent = `No... It's not them...`;
+            filmApp.findButtonEl.textContent = `Try another...`;
             filmApp.dropdownGenreEl.disabled = true;
             filmApp.dropdownDecadeEl.disabled = true;
             filmApp.dropdownRatingEl.disabled = true;
@@ -214,6 +217,9 @@ filmApp.reset = () => {
         filmApp.dropdownGenreEl.disabled = false;
         filmApp.dropdownDecadeEl.disabled = false;
         filmApp.dropdownRatingEl.disabled = false;
+        filmApp.findButtonEl.style.display = "inline-block";
+        filmApp.resetButtonEl.style.flexBasis = "28%";
+        filmApp.resetButtonEl.style.borderLeft = "none";
     })
 }
 
