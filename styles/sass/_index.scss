@@ -1,94 +1,257 @@
-// HEADER STYLES
+// HEADER
+
+.bodyVerticalHeader {
+    position: fixed;
+    overflow: hidden;
+    height: 100vh;
+    width: 40vw;
+    background: url('../assets/heroHollywoodPurple.jpg');
+    background-size: cover;
+}
 
 header {
-    background: url('../assets/heroImageBlurred.jpg') center;
-    background-size: cover;
-    height: 55vh;
+    height: 100%;
+    background: radial-gradient(white, rgba(255, 255, 255, 0.3));
+}
+
+header .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.headerTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+    margin-top: 3rem;
 }
 
 h1 {
-    color: $primaryBlack;
-    text-shadow: 2px 2px 5px white;
+    text-shadow: 1px 1px 10px white;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgb(131, 26, 52);
 }
 
-// MAIN STYLES
+.headerTitle p {
+    text-align: center;
+    color: $primaryBlack;
+    text-shadow: 2px 2px 9px black;
+}
 
-.questions p,
+.headerDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    background: radial-gradient(white, rgba(255, 255, 255, 0.2));
+    color: $primaryBlack;
+    font-weight: 600;
+}
+
+.headerDetails a {
+    text-decoration: none;
+    color: $primaryBlack;
+}
+
+
+// MAIN
+
+.bodyVerticalContainer {
+    display: flex;
+}
+
+.bodyVerticalMain {
+    flex-grow: 1;
+    margin-left: 40vw;
+    height: 100vh;
+    background: linear-gradient(15deg, rgb(88, 18, 88), rgb(238, 106, 106));
+}
+
+main {
+    padding-top: 4rem;
+    height: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0.2), $primaryWhite);
+}
+
+.questions .wrapper {
+    text-align: center;
+}
+
 h2 {
-    margin: 50px 0;
+    margin: 20px 0;
 }
 
 select {
-    background: $primaryGreen;
+    background: $primaryBlack;
+    color: $primaryWhite;
+    text-align: center;
+}
+
+label {
+    text-align: center;
 }
 
 .output {
     text-align: center;
+    margin-top: 3rem;
 }
 
 .buttonContainer {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 22rem;
+    margin: 0 auto;
 }
-button {
-    width: 50%;
-    padding: 10px 40px;
-    margin: 30px 0;
+
+.shuffleButton {
+    flex: 0 0 72%;
+    border: 0.2rem solid $primaryRed;
+    border-right: none;
     background-color: $primaryRed;
     color: $primaryWhite;
-    border: none;
-    transition: 0.2s ease-in-out;
 }
 
-button:hover {
-    color: $primaryRed;
-    background-color: $primaryGreen;
-}
-
-// FOOTER STYLES
-
-footer {
+.shuffleButton:hover {
     background-color: $primaryBlack;
-        p {
-            color: $primaryWhite;
-            text-align: center;
-                a {
-                    color: $primaryWhite;
-                }
-        }
+    color: $primaryRed;
 }
+
+.clearButton {
+    flex: 0 0 28%;
+    border: 0.2rem solid $primaryRed;
+    border-left: none;
+    background-color: $primaryWhite;
+    color: $primaryRed;
+}
+
+.clearButton:hover {
+    background-color: rgb(161, 161, 161);
+    color: $primaryWhite;
+}
+
+.suggestedActor p {
+    @include fontSize(32);
+    padding: 0.5rem;
+}
+
+.suggestedActor p:first-child {
+    font-weight: 800;
+}
+
 
 // MEDIA QUERIES
 
-@media (max-width: 1200px) {
+@media (max-width: 1380px) {
+    .bodyVerticalHeader {
+        width: 45vw;
+    }
+
+    .bodyVerticalMain {
+        margin-left: 45vw;
+    }
+    
     h1 {
-        @include fontSize(90);
-        padding: 15px 0;
+        @include fontSize(82);
+    }
+
+    h2 {
+        @include fontSize(38);
     }
 }
 
-@media (max-width: 780px) {
-    h2 {
-        @include fontSize(40);
+@media (max-width: 1120px) {
+    .bodyVerticalContainer {
+        flex-direction: column;
     }
-    p ,
-    label {
-        @include fontSize(25);
+
+    .bodyVerticalHeader {
+        position: static;
+        width: 100%;
+        height: 80vh;
+        background-position: bottom 50% right 50%;
     }
+
+    header .wrapper {
+        justify-content: center;
+    }
+
+    .headerTitle {
+        gap: 2rem;
+    }
+
+    .headerDetails {
+        margin-top: 4rem;
+    }
+    
+    .bodyVerticalMain {
+        margin-left: 0;
+        height: 60vh;
+    }
+
     button {
-        width: 75%;
+        @include fontSize(35);
+    }
+
+    .buttonContainer {
+        width: 20rem;
+    }
+
+    .shuffleButton, .clearButton {
+        padding: 0.5rem;
+    }
+
+    .suggestedActor p:last-child {
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .bodyVerticalHeader {
+        min-height: 90vh;
+    }
+
+    .bodyVerticalMain {
+        min-height: 50vh;
+    }
+
+    main {
+        height: 100%;
+    }
+
+    .questions .wrapper {
+        width: 45%;
+    }
+
+    .break {
+        padding: 0rem;
+    }
+
+    label {
+        line-height: 2.5rem;
+    }
+
+    button {
         @include fontSize(30);
     }
+
+    .buttonContainer {
+        width: 16rem;
+    }
 }
 
-@media (max-width: 375px) {
-    .questions p,
-    h2 {
-        margin: 25px 0;
+@media (max-width: 450px) {
+    h1 {
+        @include fontSize(60);
     }
-    button {
-        width: 100%;
-        margin: 15px 0;
+
+    .questions .wrapper {
+        width: 65%;
     }
 }

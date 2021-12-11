@@ -21,12 +21,6 @@ label {
     letter-spacing: 0.1rem;
 }
 
-button {
-    font-family: 'Oxygen', sans-serif;
-    @include fontSize(40);
-    
-}
-
 footer p {
     @include fontSize(20);
 }
